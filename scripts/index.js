@@ -1,12 +1,19 @@
 
 async function readRepositories () {
-    let response = await fetch('https://api.github.com/users/Alexanderglebik/repos');
-    let repositories = await response.json();
-    setTimeout(()=>{
-    document.querySelector('#spinner').style.display = 'none';
-    },2000);
-    buildCards(repositories);
-
+    let repositories ='';
+    try{
+        let response = await fetch('https://api.github.com/users/Alexanderglebik/repos');
+            repositories = await response.json();
+    }
+    catch(e){
+        console.error(e);
+    }    
+    finally{
+        buildCards(repositories);
+        setTimeout(()=>{
+            document.querySelector('#spinner').style.display = 'none';
+        },2000);
+    }
 }
 
 function buildCards(repositories) {
